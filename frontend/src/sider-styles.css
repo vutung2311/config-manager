@@ -1,0 +1,16 @@
+/* Make sidebar width auto expand for its content */
+.ant-layout-sider {
+  width: auto !important;
+  min-width: fit-content !important;
+}
+
+.ant-layout-sider .ant-menu {
+  width: auto !important;
+  min-width: fit-content !important;
+}
+
+.ant-layout-sider .ant-menu-item {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
