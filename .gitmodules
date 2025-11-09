@@ -1,0 +1,3 @@
+[submodule "backend/pocketbase"]
+	path = backend/pocketbase
+	url = https://github.com/vutung2311/pocketbase.git

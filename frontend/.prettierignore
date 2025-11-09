@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Config files that shouldn't be formatted
+.eslintrc.cjs
+.prettierrc
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store

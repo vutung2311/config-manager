@@ -1,0 +1,14 @@
+{
+    default_sni xn--vtng-mra48d.vn
+    fallback_sni 192.168.88.90
+}
+
+192.168.88.90:5173, xn--vtng-mra48d.vn:5173 {
+	tls internal
+	reverse_proxy frontend:5173
+}
+
+192.168.88.90:8081, xn--vtng-mra48d.vn:8081 {
+	tls internal
+	reverse_proxy pocketbase:8080
+}
