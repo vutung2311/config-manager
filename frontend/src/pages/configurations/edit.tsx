@@ -1,21 +1,20 @@
 import React from "react";
 import { useTranslate, useNavigation, useUpdate } from "@refinedev/core";
 import { Edit, useForm } from "@refinedev/antd";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Switch } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
-import { useDynamicMenuContext } from "../../context";
-import type { IConfigurationTemplate } from "../../interfaces";
+import { useGame } from "../../context";
+import type { IConfiguration } from "../../interfaces";
 
-export const ConfigurationTemplateEdit = () => {
+export const ConfigurationEdit = () => {
   const t = useTranslate();
   const { list } = useNavigation();
   const { mutate } = useUpdate();
-  const { refetch: refetchMenus } = useDynamicMenuContext();
-  const { formProps, saveButtonProps, form, query } = useForm<IConfigurationTemplate>({
-    onMutationSuccess: async () => {
-      // Refresh the dynamic menus to reflect the updated template name
-      await refetchMenus();
-      list("configuration_templates");
+  const { selectedGame } = useGame();
+
+  const { formProps, saveButtonProps, form, query } = useForm<IConfiguration>({
+    onMutationSuccess: () => {
+      list("configurations");
     },
   });
 
@@ -27,13 +26,13 @@ export const ConfigurationTemplateEdit = () => {
 
   return (
     <Edit
-      title={t("configuration_templates.titles.edit")}
+      title={t("configurations.titles.edit")}
       headerButtons={[
         <Button
           key="back"
           type="text"
           icon={<LeftOutlined />}
-          onClick={() => list("configuration_templates")}
+          onClick={() => list("configurations")}
         >
           {t("buttons.cancel")}
         </Button>,
@@ -45,17 +44,15 @@ export const ConfigurationTemplateEdit = () => {
         try {
           const parsedData = JSON.parse(values.data);
           mutate({
-            resource: "configuration_templates",
+            resource: "configurations",
             id: query?.data?.data?.id,
             values: {
               ...values,
               data: parsedData,
             },
           }, {
-            onSuccess: async () => {
-              // Refresh the dynamic menus to reflect the updated template name
-              await refetchMenus();
-              list("configuration_templates");
+            onSuccess: () => {
+              list("configurations");
             },
           });
         } catch (error) {
@@ -63,25 +60,34 @@ export const ConfigurationTemplateEdit = () => {
         }
       }}>
         <Form.Item
-          label={t("configuration_templates.fields.name")}
+          label={t("configurations.fields.name")}
           name="name"
           rules={[
             {
               required: true,
-              message: t("configuration_templates.fields.name") + " is required",
+              message: t("configurations.fields.name") + " is required",
             },
           ]}
         >
-          <Input placeholder={t("configuration_templates.fields.name")} />
+          <Input placeholder={t("configurations.fields.name")} />
+        </Form.Item>
+
+
+        <Form.Item
+          label={t("configurations.fields.is_latest")}
+          name="is_latest"
+          valuePropName="checked"
+        >
+          <Switch />
         </Form.Item>
 
         <Form.Item
-          label={t("configuration_templates.fields.data")}
+          label={t("configurations.fields.data")}
           name="data"
           rules={[
             {
               required: true,
-              message: t("configuration_templates.fields.data") + " is required",
+              message: t("configurations.fields.data") + " is required",
             },
             {
               validator: (_, value) => {

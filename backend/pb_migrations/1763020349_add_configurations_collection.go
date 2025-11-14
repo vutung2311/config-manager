@@ -39,6 +39,14 @@ func init() {
 		}
 		collection.Fields.Add(gameIdField)
 
+		// Add template_id field (varchar 255)
+		templateIdField := &core.TextField{
+			Name:     "template_id",
+			Max:      255,
+			Required: true,
+		}
+		collection.Fields.Add(templateIdField)
+
 		// Add game_id field (varchar 255)
 		latestField := &core.BoolField{
 			Name:     "is_latest",
@@ -64,7 +72,7 @@ func init() {
 
 		// Add indexes for sorting
 		collection.AddIndex("idx_configurations_created", false, "created", "")
-		collection.AddIndex("idx_configurations_unique_name_game_id_is_latest", true, "name,game_id,is_latest", "")
+		collection.AddIndex("idx_configurations_unique_name_game_id_template_id_is_latest", true, "name,game_id,template_id,is_latest", "")
 
 		// Set access rules (only authenticated users can access)
 		collection.ListRule = types.Pointer("@request.auth.id != ''")

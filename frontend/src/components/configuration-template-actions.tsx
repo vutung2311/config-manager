@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslate, useNavigation, useDelete } from "@refinedev/core";
 import { Button, Popconfirm, Dropdown } from "antd";
 import { EditOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons";
+import { useDynamicMenuContext } from "../context";
 import type { IConfigurationTemplate } from "../interfaces";
 
 type Props = {
@@ -14,6 +15,7 @@ export const ConfigurationTemplateActions: React.FC<Props> = ({ record }) => {
   const t = useTranslate();
   const { edit, show, list } = useNavigation();
   const { mutateAsync: mutateDeleteAsync } = useDelete();
+  const { refetch: refetchMenus } = useDynamicMenuContext();
 
   const handleDelete = async () => {
     try {
@@ -27,6 +29,8 @@ export const ConfigurationTemplateActions: React.FC<Props> = ({ record }) => {
           type: "success",
         },
       });
+      // Refresh the dynamic menus to remove the deleted template
+      await refetchMenus();
       // Navigate to list page after successful deletion
       list("configuration_templates");
     } catch (error) {

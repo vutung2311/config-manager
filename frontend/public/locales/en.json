@@ -258,6 +258,9 @@
     "fields": {
       "name": "Name",
       "data": "Data",
+      "template_id": "Template ID",
+      "game_id": "Game ID",
+      "is_latest": "Is Latest",
       "created": "Created",
       "updated": "Updated"
     },

@@ -33,6 +33,9 @@ export interface IConfiguration {
   id: string;
   name: string;
   data: any;
+  game_id: string;
+  template_id: string;
+  is_latest: boolean;
   created: string;
   updated: string;
 }
@@ -63,3 +66,4 @@ export interface IGame {
 export interface IGameFilterVariables {
   game_id?: string;
 }
+

@@ -7,7 +7,11 @@
     "build": "tsc && refine build",
     "dev": "refine dev",
     "refine": "refine",
-    "start": "refine start"
+    "start": "refine start",
+    "test:e2e": "cypress open",
+    "test:e2e:headless": "cypress run",
+    "test:e2e:with-server": "start-server-and-test dev http://localhost:5173 test:e2e:headless",
+    "test:e2e:interactive": "start-server-and-test dev http://localhost:5173 test:e2e"
   },
   "browserslist": [
     ">0.2%",
@@ -57,6 +61,8 @@
     "@types/react-dom": "^19.1.0",
     "@types/react-input-mask": "^3.0.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "cypress": "^15.6.0",
+    "start-server-and-test": "^2.1.2",
     "typescript": "^5.8.3",
     "vite": "^5.4.15"
   },

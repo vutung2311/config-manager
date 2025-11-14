@@ -120,6 +120,24 @@ export const authProvider: AuthProvider = {
       };
     }
 
+    // Handle 400 errors with authentication-related messages
+    if (error.response?.status === 400) {
+      const message = error.response?.data?.message || error.message || '';
+      const lowerMessage = message.toLowerCase();
+      if (lowerMessage.includes('authentication') && (lowerMessage.includes('token') || lowerMessage.includes('expired') || lowerMessage.includes('login'))) {
+        notification.error({
+          message: "Authentication Error",
+          description: "Authentication token expired. Please login again.",
+        });
+        pb.authStore.clear();
+        localStorage.removeItem('auth_collection');
+        return {
+          logout: true,
+          redirectTo: "/login",
+        };
+      }
+    }
+
     return { error };
   },
   check: async () => {
